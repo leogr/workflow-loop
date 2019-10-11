@@ -1,0 +1,21 @@
+name: Loop
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+        
+    - name: commit
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        date > date
+        git add -A
+        git commit -m "Looping..." -a
+        git push "https://${GH_PAT}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master --follow-tags
